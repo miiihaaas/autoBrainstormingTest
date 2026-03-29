@@ -1,195 +1,224 @@
-# autobudget — Autonomno istraživanje modula za budžetsko računovodstvo u školstvu
+# autobudget — Autonomno istraživanje za projektni zadatak: Budžetsko računovodstvo u školstvu
 
-Ovo je eksperiment u kojem LLM autonomno istražuje, dizajnira i iterativno gradi modul za budžetsko računovodstvo u obrazovnim institucijama.
+Ovo je eksperiment u kojem LLM autonomno istražuje domenu budžetskog računovodstva u školstvu i generiše sveobuhvatnu dokumentaciju koja će služiti kao podloga za pisanje projektnog zadatka za izradu Django aplikacije.
 
 ## Setup
 
-Za pokretanje novog eksperimenta, dogovori se sa korisnikom:
+Za pokretanje novog istraživanja, dogovori se sa korisnikom:
 
 1. **Dogovori run tag**: predloži tag na osnovu današnjeg datuma (npr. `mar29`). Grana `autobudget/<tag>` ne smije već postojati — ovo je svježi run.
 2. **Kreiraj granu**: `git checkout -b autobudget/<tag>` od trenutnog main-a.
 3. **Pročitaj kontekstualne fajlove**: Repo je mali. Pročitaj ove fajlove za puni kontekst:
-   - `brainstorming/budžetsko_računovodstvo.md` — domena, pojmovi, funkcionalni zahtjevi, pravni okvir.
-   - `brainstorming/program.md` — ovaj fajl. Pravila rada i eksperimentisanja.
-   - `src/models/` — data modeli (šeme baze). Ovo je fajl koji kreiraš i modificiraš.
-   - `src/api/` — API endpointi. Ovo kreiraš i modificiraš.
-   - `src/services/` — poslovna logika. Ovo kreiraš i modificiraš.
-4. **Provjeri okruženje**: Provjeri da je baza podataka dostupna i da su dependencies instalirani. Ako ne, reci korisniku da pokrene `npm install` ili ekvivalent.
-5. **Inicijaliziraj results.tsv**: Kreiraj `results.tsv` sa header redom. Baseline će se zabilježiti nakon prvog modula.
-6. **Potvrdi i kreni**: Potvrdi da je setup u redu.
+   - `budžetsko_računovodstvo.md` — početni brainstorming, pojmovi, funkcionalni zahtjevi.
+   - `program.md` — ovaj fajl. Pravila rada i istraživanja.
+4. **Inicijaliziraj results.tsv**: Kreiraj `results.tsv` sa header redom.
+5. **Potvrdi i kreni**: Potvrdi da je setup u redu.
 
-Kad dobiješ potvrdu, pokreni eksperimentaciju.
+Kad dobiješ potvrdu, pokreni istraživačku petlju.
+
+## Cilj
+
+**NE pišeš kod.** Tvoj zadatak je da istražiš domenu i generišeš detaljnu dokumentaciju koja pokriva sve aspekte budžetskog računovodstva u školstvu. Ova dokumentacija će kasnije služiti kao osnova za pisanje formalnog projektnog zadatka za izradu Django aplikacije.
+
+Za svaku temu/modul generiši zaseban `.md` fajl u folderu `research/` sa dubinskim istraživanjem.
+
+**Tech stack za koji se priprema dokumentacija: Django (Python), PostgreSQL.**
 
 ## Domena
 
-Radiš na modulu za budžetsko računovodstvo za obrazovne institucije (osnovne škole, srednje škole, visokoškolske ustanove). Ove institucije su **budžetski korisnici** — finansiraju se iz javnih sredstava i podliježu strogim zakonskim regulativama.
+Radiš istraživanje za modul budžetskog računovodstva za obrazovne institucije (osnovne škole, srednje škole, visokoškolske ustanove) u Bosni i Hercegovini. Ove institucije su **budžetski korisnici** — finansiraju se iz javnih sredstava i podliježu strogim zakonskim regulativama.
 
-### Ključni koncepti koje moraš razumjeti:
+### Ključni koncepti koje moraš istražiti:
 - **Kontni plan za budžetske korisnike** (klase 0-9) — temelj cijelog modula
 - **Budžetska klasifikacija** — ekonomska, organizaciona, funkcionalna, programska
 - **Plate i doprinosi** — 80-90% budžeta škole, najkompleksniji obračun
 - **Trezorski sistem** — škole ne plaćaju direktno, sve ide preko trezora
 - **Fiskalna godina** — svi planovi i izvještaji su godišnji, sa mjesečnim/kvartalnim presjecima
+- **Pravni okvir BiH** — zakoni na državnom, entitetskom i kantonalnom nivou
 
-## Eksperimentacija
+## Šta istražuješ i generišeš
 
-Svaki eksperiment se fokusira na **jedan modul ili podmodul** iz sistema. Radi iterativno — prvo data model, pa servisni sloj, pa API, pa validacija.
+Za svaku temu kreiraj detaljan dokument u `research/` folderu:
+
+### FAZA 1 — Pravni i regulatorni okvir
+| Fajl | Sadržaj |
+|---|---|
+| `research/01_pravni_okvir.md` | Svi relevantni zakoni i propisi (FBiH, RS, BD). Zakon o budžetima, Zakon o računovodstvu, pravilnici. Citati ključnih članova. |
+| `research/02_kontni_plan.md` | Detaljan kontni plan za budžetske korisnike u školstvu. Sve klase, grupe, sintetički i analitički konti sa objašnjenjima. Primjeri knjiženja. |
+| `research/03_budzetske_klasifikacije.md` | Ekonomska, organizaciona, funkcionalna i programska klasifikacija. Kako se primjenjuju u školstvu. Šifrarnici. |
+
+### FAZA 2 — Finansijski procesi
+| Fajl | Sadržaj |
+|---|---|
+| `research/04_glavna_knjiga.md` | Kako funkcioniše glavna knjiga budžetskog korisnika. Double-entry princip. Dnevnik, analitika, sintetika. Primjeri knjiženja za škole. |
+| `research/05_budzet_planiranje.md` | Proces planiranja budžeta škole. Ko učestvuje, rokovi, dokumenti. Rebalans. Primjer budžeta osnovne škole. |
+| `research/06_budzet_izvrsenje.md` | Praćenje izvršenja budžeta. Mjesečni operativni planovi. Zahtjevi za dodjelu sredstava. Izvještaji. |
+| `research/07_trezorski_sistem.md` | Kako funkcioniše trezorski sistem. JRT (jedinstveni račun trezora). Kako škole plaćaju preko trezora. Nalozi, odobrenja. |
+
+### FAZA 3 — Obračun plata
+| Fajl | Sadržaj |
+|---|---|
+| `research/08_plate_osnove.md` | Struktura plate u školstvu. Osnovica, koeficijenti po zvanjima (nastavnik, profesor, direktor...). Platni razredi. Kolektivni ugovor. |
+| `research/09_plate_dodaci.md` | Svi dodaci na platu: minuli rad, razredništvo, mentorstvo, rad u otežanim uslovima, prekovremeni. Formule obračuna. |
+| `research/10_doprinosi_porezi.md` | Doprinosi iz plate i na platu (PIO, zdravstveno, nezaposlenost). Porez na dohodak. Stope po entitetima. Primjer kompletnog obračuna. |
+| `research/11_bolovanja_odsustva.md` | Obračun bolovanja (42 dana poslodavac, dalje fond). Porodiljsko. Godišnji odmor. Plaćeno/neplaćeno odsustvo. |
+| `research/12_honorari_ugovori.md` | Ugovori o djelu, autorski honorari. Obračun poreza i doprinosa. Specifičnosti za vanjske saradnike u školi. |
+
+### FAZA 4 — Imovina i nabavke
+| Fajl | Sadržaj |
+|---|---|
+| `research/13_javne_nabavke.md` | Zakon o javnim nabavkama BiH. Pragovi, postupci (direktni sporazum, konkurentski zahtjev, otvoreni). Plan nabavki škole. |
+| `research/14_imovina_amortizacija.md` | Evidencija imovine budžetskog korisnika. Kategorije (objekti, oprema, IT, namještaj). Stope amortizacije. Popis. Otpis. |
+| `research/15_blagajna_banka.md` | Blagajničko poslovanje škole. Limiti gotovine. Bankovni izvodi. Uparivanje. Format naloga za plaćanje. |
+
+### FAZA 5 — Izvještavanje
+| Fajl | Sadržaj |
+|---|---|
+| `research/16_finansijski_izvjestaji.md` | Bilans stanja, bilans uspjeha, izvještaj o novčanim tokovima. Forme i obrasci. Rokovi podnošenja. |
+| `research/17_budzet_izvjestaji.md` | Izvještaj o izvršenju budžeta (mjesečni, kvartalni, godišnji). Forme. Ko ih prima. |
+| `research/18_statisticki_izvjestaji.md` | Izvještaji za zavod za statistiku, ministarstvo obrazovanja. Obrasci. Rokovi. |
+
+### FAZA 6 — Specifikacija za Django
+| Fajl | Sadržaj |
+|---|---|
+| `research/19_django_modeli.md` | Prijedlog Django modela (models.py) za sve module. Relacije, polja, validacije. Decimal polja za financije. |
+| `research/20_django_api.md` | Prijedlog API endpointa (DRF ili views). CRUD za sve entitete. Filteri, paginacija. |
+| `research/21_django_admin.md` | Prijedlog Django admin konfiguracije. Inline modeli, filteri, akcije. |
+| `research/22_projektni_zadatak.md` | **FINALNI DOKUMENT** — formalni projektni zadatak za izradu aplikacije, sintetizovan iz svega prethodnog. |
+
+## Pravila istraživanja
 
 **Šta MOŽEŠ raditi:**
-- Kreirati i modificirati fajlove u `src/` — modeli, servisi, API, utils
-- Kreirati migracije baze podataka
-- Pisati unit i integration testove
-- Koristiti LLM za istraživanje pravnih propisa i računovodstvenih standarda
-- Predlagati šemu baze, API dizajn, poslovnu logiku
+- Kreirati i modificirati `.md` fajlove u `research/` folderu
+- Koristiti web pretragu za zakone, propise, pravilnike, kolektivne ugovore
+- Koristiti LLM znanje o računovodstvu, finansijama, Django frameworku
+- Commitovati svaki završeni dokument
 
 **Šta NE MOŽEŠ raditi:**
-- Mijenjati `brainstorming/budžetsko_računovodstvo.md` — to je referentni dokument (read-only)
-- Instalirati nove pakete bez eksplicitnog odobrenja korisnika
-- Preskočiti validaciju podataka — budžetski podaci moraju biti tačni do zadnje pare
-- Ignorisati audit trail — svaka promjena finansijskih podataka mora biti logovana
-- Brisati ili mijenjati zatvorene fiskalne periode
+- Mijenjati `budžetsko_računovodstvo.md` — to je početni referentni dokument (read-only)
+- Pisati Python/Django kod — samo specifikacije i prijedloge modela u markdown-u
+- Izmišljati brojeve za poreske stope ili koeficijente — koristi web pretragu za tačne podatke
+- Preskočiti web pretragu za pravne teme — propisi se mijenjaju, tvoje znanje može biti zastarjelo
 
-**Cilj je jednostavan: napraviti funkcionalan, korektan i jednostavan modul koji zadovoljava zahtjeve iz brainstorming dokumenta.** Prioritet je:
+**Kvalitet dokumenta**:
+- Svaki dokument mora biti **detaljan i konkretan** — ne generički
+- Uključi **primjere** gdje god je moguće (primjer knjiženja, primjer obračuna plate, primjer budžeta)
+- Citiraj **konkretne zakone i članove** — ne "prema zakonu" nego "prema članu 45. Zakona o budžetima FBiH"
+- Za formule obračuna daj **numeričke primjere** sa realnim brojevima
+- Ako nešto varira po kantonima/entitetima, **navedi razlike**
 
-1. **Korektnost** — računovodstveni podaci moraju biti 100% tačni. Bilans se mora poklapati. Duguje = Potražuje, uvijek.
-2. **Usklađenost** — modul mora poštovati zakonske propise i računovodstvene standarde.
-3. **Jednostavnost** — manje koda je bolje. Ne pretjerivati sa apstrakcijama.
-4. **Proširivost** — kontni plan i formule moraju biti konfigurabilan, jer se propisi mjenjaju.
-
-**Kriterij jednostavnosti**: Isto kao kod treniranja modela — ako dodaješ kompleksnost, mora donijeti jasnu vrijednost. 20 linija koda za edge case koji se dešava jednom godišnje? Vjerovatno ne. Konfigurabilan kontni plan umjesto hardkodiranog? Obavezno — propisi se mijenjaju.
-
-**Prva iteracija**: Uvijek počni sa data modelom za kontni plan i glavnu knjigu — to je fundament svega.
+**Kriterij kompletnosti**: Dokument je kompletiran kad sadrži dovoljno informacija da programer koji nikad nije radio sa budžetskim računovodstvom može na osnovu njega napisati funkcionalan Django modul.
 
 ## Output format
 
-Nakon svake iteracije, modul se validira ovako:
+Nakon svake iteracije (završenog dokumenta), zapiši rezime:
 
 ```
 ---
-modul:              kontni_plan
-status:             pass | fail | partial
-test_coverage:      85%
-api_endpoints:      5
-db_migrations:      2
-validation_errors:  0
-bilans_check:       BALANCED | UNBALANCED
-complexity_score:   low | medium | high
+tema:               kontni_plan
+fajl:               research/02_kontni_plan.md
+status:             complete | partial | needs_review
+web_sources:        3
+examples_included:  5
+laws_cited:         2
+word_count:         ~2500
 ---
-```
-
-Možeš izvući ključne metrike:
-
-```
-grep "^status:\|^bilans_check:\|^validation_errors:" iteration.log
 ```
 
 ## Logovanje rezultata
 
-Kad je iteracija gotova, zapiši u `results.tsv` (tab-separated, NE comma-separated).
+Kad je iteracija gotova, zapiši u `results.tsv` (tab-separated).
 
 TSV ima header red i 6 kolona:
 
 ```
-commit	modul	status	bilans_check	complexity	description
+commit	tema	fajl	status	sources	description
 ```
 
 1. git commit hash (short, 7 chars)
-2. naziv modula (npr. kontni_plan, glavna_knjiga, plate)
-3. status: `keep`, `discard`, ili `fail`
-4. bilans_check: `BALANCED`, `UNBALANCED`, ili `N/A`
-5. complexity: `low`, `medium`, `high`
-6. kratak opis šta je ova iteracija pokušala
+2. naziv teme (npr. kontni_plan, plate_osnove, javne_nabavke)
+3. putanja do fajla (npr. research/02_kontni_plan.md)
+4. status: `complete`, `partial`, ili `needs_review`
+5. broj izvora (web + zakonski) korištenih
+6. kratak opis šta dokument pokriva
 
 Primjer:
 
 ```
-commit	modul	status	bilans_check	complexity	description
-a1b2c3d	kontni_plan	keep	N/A	low	baseline — CRUD za kontni plan sa 9 klasa
-b2c3d4e	glavna_knjiga	keep	BALANCED	medium	dnevnik knjiženja sa double-entry validacijom
-c3d4e5f	plate_obracun	keep	BALANCED	high	obračun plata sa koeficijentima i doprinosima
-d4e5f6g	plate_bolovanje	fail	UNBALANCED	high	obračun bolovanja — formula za refundaciju neispravna
-e5f6g7h	plate_bolovanje	keep	BALANCED	medium	fix formule — pojednostavljen pristup
+commit	tema	fajl	status	sources	description
+a1b2c3d	pravni_okvir	research/01_pravni_okvir.md	complete	8	zakoni FBiH/RS/BD — budžet, računovodstvo, trezor, javne nabavke
+b2c3d4e	kontni_plan	research/02_kontni_plan.md	complete	5	kontni plan klase 0-9 sa primjerima knjiženja za škole
+c3d4e5f	plate_osnove	research/08_plate_osnove.md	partial	3	osnovice i koeficijenti — nedostaju podaci za RS
 ```
 
-## Petlja eksperimentacije
+## Petlja istraživanja
 
-Eksperiment se odvija na dediciranoj grani (npr. `autobudget/mar29`).
+Istraživanje se odvija na dediciranoj grani (npr. `autobudget/mar29`).
 
 LOOP ZAUVIJEK:
 
-1. **Provjeri git stanje**: trenutna grana/commit, šta je urađeno do sad.
-2. **Odaberi sljedeći modul/podmodul** iz prioritetne liste:
-   - Faza 1: kontni_plan → glavna_knjiga → dnevnik_knjiženja → bilans_stanja → bilans_uspjeha
-   - Faza 2: budžet_plan → budžet_izvršenje → plate_obračun → plate_doprinosi → banka_export
-   - Faza 3: javne_nabavke → imovina_registar → amortizacija → blagajna → bankovni_izvodi
-   - Faza 4: trezor_integracija → custom_izvještaji → dashboard → notifikacije
-3. **Istraži domenu** — ako ti treba kontekst o specifičnom propisu ili formuli, koristi LLM znanje i web pretragu.
-4. **Implementiraj** — data model, servis, API, testovi.
-5. **Validiraj**:
-   - Pokreni testove: `npm test > iteration.log 2>&1`
-   - Provjeri bilans: Duguje == Potražuje za svaki nalog
-   - Provjeri API: svaki endpoint vraća očekivane rezultate
-6. **Zapiši rezultat** u results.tsv (NE commitovati results.tsv, drži ga untracked)
-7. **Ako je validacija prošla** (status: pass/keep) — commituj i nastavi dalje
-8. **Ako je validacija pala** (status: fail) — analiziraj grešku:
-   - Ako je bug u kodu — popravi i ponovo testiraj
-   - Ako je konceptualni problem — zapiši kao `discard`, git reset i pokušaj drugi pristup
-   - Ako ne možeš riješiti nakon 3 pokušaja — zapiši kao `fail`, revert i nastavi sa sljedećim modulom
+1. **Provjeri git stanje**: šta je do sad urađeno, koji dokumenti postoje u `research/`.
+2. **Odaberi sljedeću temu** po redoslijedu faza (1→2→3→4→5→6). Unutar faze idi redom.
+3. **Istraži temu**:
+   - Koristi web pretragu za zakone, propise, stope, obrasce
+   - Provjeri više izvora — ne oslanjaj se na jedan
+   - Za BiH specifičnosti traži na ba domenama, službenim glasnicima
+4. **Napiši dokument** u `research/` folderu — detaljan, sa primjerima i citatima.
+5. **Provjeri kvalitet**:
+   - Da li je dovoljno detaljan da programer može kodirati na osnovu njega?
+   - Da li su navedeni konkretni zakoni i članovi?
+   - Da li ima numeričke primjere?
+   - Ako ne — dopuni prije nego nastaviš dalje.
+6. **Commituj** dokument sa opisnim commit message-om.
+7. **Zapiši** u results.tsv (NE commitovati results.tsv).
+8. **Nastavi** sa sljedećom temom.
 
-### Pravila za računovodstvenu korektnost:
-
-- **Double-entry princip**: Svako knjiženje MORA imati duguje i potražuje stranu. Zbir duguje MORA biti jednak zbiru potražuje. Nema izuzetaka.
-- **Zatvoreni periodi**: Jednom zatvoren mjesec/godina se NE MOŽE mijenjati. Korekcije se rade kroz nova knjiženja u tekućem periodu.
-- **Decimalna preciznost**: Svi finansijski iznosi na 2 decimale. Nikad floating point — koristi integer (u fenigima/centima) ili Decimal tip.
-- **Valuta**: Podrazumijevana valuta je BAM (konvertibilna marka). Sistem mora podržavati šifru valute za buduću proširivost.
-- **Redni brojevi**: Nalozi u glavnoj knjizi imaju kontinuirani redni broj unutar fiskalne godine. Nema rupa u sekvenci.
-- **Audit trail**: Svaki zapis ima created_by, created_at, updated_by, updated_at. Finansijski zapisi imaju i full change history.
-
-### Pravila za plate u školstvu:
-
-- Plata = osnovica * koeficijent + dodaci (minuli rad, razredništvo, mentorstvo, itd.)
-- Minuli rad = 0.5% po godini staža (ili prema kolektivnom ugovoru)
-- Doprinosi se računaju NA platu (poslodavac) i IZ plate (zaposleni)
-- Bolovanje: prvih 42 dana na teret poslodavca, nakon toga na teret fonda
-- Porodiljsko: 100% plate, na teret budžeta ili fonda (zavisno od propisa)
-- Topli obrok, prevoz, regres — prema kolektivnom ugovoru
+Ako otkriješ da prethodni dokument treba dopunu (npr. istraživanje plata otkriva da pravni okvir nije dovoljno detaljan), **vrati se i dopuni** — ali zapiši to kao zasebnu iteraciju u results.tsv.
 
 ## Prioriteti i redoslijed
 
 ```
-FAZA 1 — Fundament (OBAVEZNO PRVO)
-├── kontni_plan        ← konfigurabilna šema sa 9 klasa i podkontima
-├── glavna_knjiga      ← double-entry knjiženje, dnevnik, salda
-├── bilans_stanja      ← automatsko generisanje iz glavne knjige
-└── bilans_uspjeha     ← prihodi vs rashodi, rezultat
+FAZA 1 — Pravni temelj (OBAVEZNO PRVO)
+├── 01_pravni_okvir           ← zakoni i propisi
+├── 02_kontni_plan            ← klase, grupe, analitički konti
+└── 03_budzetske_klasifikacije ← ekonomska, org., funkcionalna, programska
 
-FAZA 2 — Core poslovanje
-├── budžet_plan        ← godišnji plan po stavkama i klasifikacijama
-├── budžet_izvršenje   ← praćenje realizacije vs plan
-├── plate_obračun      ← koeficijenti, dodaci, neto/bruto
-├── plate_doprinosi    ← automatski obračun svih doprinosa
-└── banka_export       ← generisanje platnih naloga
+FAZA 2 — Finansijski procesi
+├── 04_glavna_knjiga          ← double-entry, dnevnik, salda
+├── 05_budzet_planiranje      ← proces, rokovi, dokumenti
+├── 06_budzet_izvrsenje       ← praćenje, operativni planovi
+└── 07_trezorski_sistem       ← JRT, nalozi, odobrenja
 
-FAZA 3 — Prošireni moduli
-├── javne_nabavke      ← plan, postupci, ugovori
-├── imovina            ← registar, amortizacija, popis
-├── blagajna           ← gotovinski promet
-└── bankovni_izvodi    ← import i uparivanje
+FAZA 3 — Plate i doprinosi
+├── 08_plate_osnove           ← osnovice, koeficijenti, zvanja
+├── 09_plate_dodaci           ← minuli rad, razredništvo, formule
+├── 10_doprinosi_porezi       ← stope, obračun, primjeri
+├── 11_bolovanja_odsustva     ← naknade, fondovi, trajanja
+└── 12_honorari_ugovori       ← ugovori o djelu, autorski
 
-FAZA 4 — Napredne funkcije
-├── trezor             ← integracija sa trezorskim sistemom
-├── izvještaji         ← custom izvještaji i dashboardi
-└── notifikacije       ← rokovi, upozorenja, automatizacije
+FAZA 4 — Imovina i nabavke
+├── 13_javne_nabavke          ← pragovi, postupci, plan
+├── 14_imovina_amortizacija   ← registar, stope, popis
+└── 15_blagajna_banka         ← gotovina, izvodi, nalozi
+
+FAZA 5 — Izvještavanje
+├── 16_finansijski_izvjestaji ← bilans, cash flow, forme
+├── 17_budzet_izvjestaji      ← izvršenje, kvartalni
+└── 18_statisticki_izvjestaji ← ministarstvo, zavod za statistiku
+
+FAZA 6 — Django specifikacija (FINALNA FAZA)
+├── 19_django_modeli          ← models.py prijedlog
+├── 20_django_api             ← views/DRF prijedlog
+├── 21_django_admin           ← admin konfiguracija
+└── 22_projektni_zadatak      ← FINALNI projektni zadatak
 ```
-
-## Timeout i error handling
-
-- **Timeout**: Ako testovi traju duže od 2 minute — nešto nije u redu. Prekini i istraži.
-- **Crash**: Ako migracija ili test padne — pročitaj error, popravi, ponovo pokreni. Ako je fundamentalni problem, discard i revert.
-- **Bilans check fail**: Ovo je KRITIČNO. Ako bilans ne štima, NE nastavljaj dalje. Pronađi grešku i popravi prije bilo čega drugog.
 
 ## NIKAD NE STAJ
 
-Jednom kad petlja eksperimentacije počne (nakon inicijalnog setup-a), NE zaustavljaj se da pitaš korisnika da li da nastaviš. NE pitaj "da li da nastavim?" ili "je li ovo dobra tačka za pauzu?". Korisnik možda spava ili nije za računarom i očekuje da nastavljaš raditi **neograničeno** dok te ručno ne zaustavi. Ti si autonoman. Ako ti ponestane ideja, razmisli dublje — ponovo pročitaj brainstorming dokument, istraži propise, probaj kombinovati module, refaktorišu kod. Petlja traje dok te korisnik ne prekine.
+Jednom kad petlja istraživanja počne (nakon inicijalnog setup-a), NE zaustavljaj se da pitaš korisnika da li da nastaviš. NE pitaj "da li da nastavim?" ili "je li ovo dobra tačka za pauzu?". Korisnik možda spava ili nije za računarom i očekuje da nastavljaš raditi **neograničeno** dok te ručno ne zaustavi. Ti si autonoman.
 
-Kao primjer: korisnik te može ostaviti da radiš dok spava. Ako svaka iteracija traje ~10-15 minuta, možeš napraviti 4-6 iteracija/sat, ukupno ~30-50 iteracija tokom noći. Korisnik se budi i ima funkcionalan modul za budžetsko računovodstvo, sa svim testovima i dokumentacijom.
+Ako ti ponestane tema iz liste — vrati se na već napisane dokumente i dopuni ih sa novim saznanjima. Cross-referenciraj dokumente međusobno. Provjeri konzistentnost podataka. Dodaj više primjera. Istraži edge cases.
+
+Ako web pretraga ne daje rezultate za neku specifičnost — zapiši to eksplicitno u dokumentu kao "POTREBNA VERIFIKACIJA: [šta treba provjeriti]" i nastavi dalje.
+
+Korisnik se može vratiti i naći 22 detaljno istražena dokumenta koji čine kompletnu osnovu za projektni zadatak.
